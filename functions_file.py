@@ -211,3 +211,33 @@ def main_menu():
             
         else:
             print("Invalid option. Please choose a number from 1 to 4.")
+
+"""graph for all player wins wins"""
+import matplotlib.pyplot as plt
+def win_graph:
+    plt.figure(num = "Wins per Game")
+    x = []
+    y = []
+
+    plt.plot(x, y, color = 'yellow', linestyle = '--', marker = '*', label = 'Games')
+    plt.title("Wins per Games")
+    plt.xlabel("Games")
+    plt.ylabel("Wins")
+
+    plt.grid(True)
+    plt.show()
+
+"""graphs plpayer guesses"""
+import matplotlib.pyplot as plt
+def guess_graph:
+    plt.figure(num = "Guesses per Word")
+    x = []
+    y = []
+
+    plt.plot(x, y, color = 'red', linestyle = '--', marker = 'o', label = 'Games')
+    plt.title("Guesses per Word")
+    plt.xlabel("Words")
+    plt.ylabel("Guesses")
+
+    plt.grid(True)
+    plt.show()
