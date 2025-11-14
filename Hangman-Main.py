@@ -4,15 +4,10 @@
 
 import turtle
 import random
-
-file = open("Hangman_Dictionary.txt", "r")
+import matplotlib.pyplot as plt
 
 def main_menu():
-    """Manages the user interface and routes to different functions."""
-    current_word_bank = load_word_bank(WORD_BANK_FILE)
-    
-    print("Welcome to Command-Line Hangman!")
-    
+    print("Welcome to Command-Line Hangman! Choose an option to continue... \n")
     while True:
         print("\n" + "="*30)
         print("MAIN MENU:")
@@ -22,29 +17,52 @@ def main_menu():
         print("4. Quit")
         print("="*30)
         
-        choice = input("Enter option number (1-4): ").strip()
+        menu_input = input("Enter option number (1-4): ").strip()
+
+        if menu_input == "1":
+            print("Starting Game: ")
+            file = open("Hangman_Dictionary.txt", "r")
+            words = [word.strip().upper() for word in file]
+            chosen_word = random.choice(words)
+            print("The secret wored has been chosen! \n")
+            print("_ " * len(chosen_word))
+            file.close()
+            print
+        elif menu_input == "2":
+            print("\n--- ADD WORDS TO DICTIONARY ---")
+            print("Enter new words, one at a time. Enter 'DONE' when finished.")
+    
+            file = open(f"Hangman_Dictionary.txt", 'a') # Manually open for appending
+
+            while True:
+                new_word = input("Enter new word (or DONE): ").strip().lower()
         
-        if choice == '1':
-            start_new_game(current_word_bank)
-            
-        elif choice == '2':
-            current_word_bank = add_words_to_bank(WORD_BANK_FILE)
-            
-        elif choice == '3':
-            show_stats(current_word_bank)
-            
-        elif choice == '4':
+                if new_word == "DONE":
+                    break
+        
+                if len(new_word) > 1:
+                    file.write(new_word + "\n")
+                    print(f"'{new_word}' added.")
+                else:
+                    print("⚠️ Invalid input. Please enter a word with only letters.")
+    
+            file.close() # Manually close the file
+            print("\nDictionary update complete.")
+        elif menu_input == "3":
+            print("Showing Stats...")
+            show_stats()
+        elif menu_input == "4":
             print("\nThanks for playing! Goodbye.")
-            
+            break
         else:
             print("Invalid option. Please choose a number from 1 to 4.")
 
-words = [word.strip().upper() for word in file]
-chosen_word = random.choice(words)
-print("The secret wored has been chosen!")
-print("_ " * len(chosen_word))
+def show_stats():
+    wins = [1, 2, 3]
+    losses = [2, 4, 6]
+    plt.plot(wins, losses, color='green', marker='o')
+    plt.show()
 
-file.close()
 if __name__ == "__main__":
     # Call the main entry point of the application
     main_menu()
